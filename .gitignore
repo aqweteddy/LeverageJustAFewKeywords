@@ -2,4 +2,5 @@ oposum/
 .*/
 __py*/
 data/
-ckpt/
+ckpt/*
+*.out

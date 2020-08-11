@@ -68,17 +68,17 @@ class Trainer:
             path, f'epoch_{model_name}_student.pt'))
 
     def train_loader(self, ds):
-        sampler = data.RandomSampler(ds, replacement=True, num_samples=50000)
-        return data.DataLoader(ds, sampler=sampler, batch_size=self.hparams['batch_size'], num_workers=10, drop_last=True)
+        # sampler = data.RandomSampler(ds, replacement=True, num_samples=10000)
+        return data.DataLoader(ds, batch_size=self.hparams['batch_size'], num_workers=10)
 
     def train(self, epochs):
-        prev_best = -1
+        prev_best = torch.tensor([-1])
         loader = self.train_loader(self.ds)
         for epoch in range(epochs):
             logging.info(f'Epoch: {epoch}')
             loss = self.train_per_epoch(loader)
             score = self.test()
-            logging.info(f'epoch: {epoch}, f1_mid: {score:.3f}')
+            logging.info(f'epoch: {epoch}, f1_mid: {score:.3f}, prev_best: {prev_best.item():.3f}')
             if prev_best < score:
                 self.save_model(self.hparams['save_dir'], f'{epoch}')
                 prev_best = score
@@ -116,7 +116,7 @@ class Trainer:
             s_logits = self.student(x_id)
             loss = self.criterion(s_logits, t_logits)
             # print(f'bow: {x_bow}')
-            print(f'z: {self.z}')
+            # print(f'z: {self.z}')
             print(f'teacher:{t_logits.max(-1)[1]}')
             # print(f'x_id{x_id}')
             print(f'student:{s_logits.max(-1)[1]}')

@@ -32,12 +32,24 @@ python extract_data.py --source oposum/data/preprocessed/BOOTS_TEST.hdf5 --outpu
 * you can set config in `config.py` or using arguments.
     * notice that the general aspect index is not same in every datasets.
 * start training
+    * `seed_words` is no weight.
 ```bash
-python parser.py --train_file ./data/boots_train.json --test_file ./data/boots_test.json --save_dir ./ckpt/boots --epochs 3
+python parser.py --train_file ./data/boots_train.json --test_file ./data/boots_test.json --save_dir ./ckpt/boots --aspect_init_file ./data/seed_words.txt --epochs 3
 ```
 * `python parser.py --help` to see detail.
 
+## Benchmark
+
+### OPOSUM
+
+* Bags: 0.59 (RandomSampler 50000 data run 3 epochs.)
+* TV: 
+
 ## Some difference between the paper and this implementation
+
+### RandomSampler
+
+* random sample 50000 data every epochs.
 
 ### Teacher
 

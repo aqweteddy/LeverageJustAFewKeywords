@@ -92,12 +92,10 @@ class TestDataset(Dataset):
 
 
 if __name__ == '__main__':
-    # test dataset: [31, 14, 16, 53, 300, 26, 22, 74, 106]
+    # bags: [31, 14, 16, 53, 300, 26, 22, 74, 106]
+    # boots: [ 14, 106,  39,  49,  47, 303,  20,  68,  25]
+    # tv: [ 28,  51,  31,  41,  95, 413,  31,  22, 101]
     from tqdm import tqdm
     torch.set_printoptions(profile="full")
-    ds = Dataset('./data/seedwords/bags_and_cases.5.txt', 'data/bags_train.json')
+    ds = TestDataset('./data/seedwords/tv.5.txt', 'data/tv_test.json')
     cnt = 0
-    for l, t in tqdm(ds):
-        print(l)
-        # cnt += 1 if sum(l[0]) == 0 else 0
-    print(cnt / len(ds))

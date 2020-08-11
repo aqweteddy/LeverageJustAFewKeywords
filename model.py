@@ -23,9 +23,13 @@ class Teacher(torch.nn.Module):
         """
         # for each aspect
         result = torch.stack([self.calc(bow, zs[i,:], i) for i in range(self.asp_cnt)], dim=-1)
+        # print(result.shape)
         mask = bow.sum(1) == 0
         result[mask, self.general_asp] = 1
         result = torch.softmax(result, -1)
+        # result[mask, self.general_asp] = 1
+        # result[mask, self.general_asp+1:] = 0
+        # result[mask, :self.general_asp] = 0
 
         return result
     
